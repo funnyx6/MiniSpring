@@ -17,7 +17,7 @@ import com.mini.core.Resource;
  * @author fanxiao 2023/3/17
  * @since 1.0.0
  */
-public class ClassPathXmlApplicationContext {
+public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationEventPublisher {
 
   private BeanFactory beanFactory;
 
@@ -29,15 +29,45 @@ public class ClassPathXmlApplicationContext {
   public ClassPathXmlApplicationContext(String fileName) {
     Resource resource = new ClassPathXmlResource(fileName);
     this.beanFactory = new SimpleBeanFactory();
-    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader((SimpleBeanFactory) beanFactory);
     reader.loadBeanDefinitions(resource);
   }
 
+  @Override
   public Object getBean(String beanName) throws BeansException {
     return this.beanFactory.getBean(beanName);
   }
 
+  @Override
   public void registerBeanDefinition(BeanDefinition beanDefinition) {
     this.beanFactory.registerBeanDefinition(beanDefinition);
   }
+
+  @Override
+  public boolean containsBean(String beanName) {
+    return this.beanFactory.containsBean(beanName);
+  }
+
+  @Override
+  public void registerBean(String beanName, Object obj) {
+    this.beanFactory.registerBean(beanName, obj);
+  }
+
+  @Override
+  public boolean isSingleton(String name) {
+    return false;
+  }
+
+  @Override
+  public boolean isPrototype(String name) {
+    return false;
+  }
+
+  @Override
+  public Class getType(String name) {
+    return null;
+  }
+
+  @Override
+  public void publishEvent(ApplicationEvent event) {}
 }

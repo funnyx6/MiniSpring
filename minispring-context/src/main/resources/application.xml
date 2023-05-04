@@ -2,4 +2,8 @@
 
 <beans>
     <bean id="helloService" class="com.mini.test.HelloServiceImpl"/>
+
+    <bean id="helloServiceInject" class="com.mini.test.HelloServiceImpl">
+        <property type="String" name="injectField" value="World"></property>
+    </bean>
 </beans>
