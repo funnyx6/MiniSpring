@@ -1,7 +1,5 @@
 package com.mini.beans;
 
-import com.mini.context.BeanDefinition;
-
 /**
  * bean工厂
  *
@@ -13,11 +11,11 @@ public interface BeanFactory {
 
   Object getBean(String beanName) throws BeansException;
 
-  void registerBeanDefinition(BeanDefinition beanDefinition);
+  //  void registerBeanDefinition(BeanDefinition beanDefinition);
 
   boolean containsBean(String beanName);
 
-  void registerBean(String beanName, Object obj);
+  //  void registerBean(String beanName, Object obj);
 
   boolean isSingleton(String name);
 

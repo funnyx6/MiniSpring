@@ -38,20 +38,20 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
     return this.beanFactory.getBean(beanName);
   }
 
-  @Override
-  public void registerBeanDefinition(BeanDefinition beanDefinition) {
-    this.beanFactory.registerBeanDefinition(beanDefinition);
-  }
+  //  @Override
+  //  public void registerBeanDefinition(BeanDefinition beanDefinition) {
+  //    this.beanFactory.registerBeanDefinition(beanDefinition);
+  //  }
 
   @Override
   public boolean containsBean(String beanName) {
     return this.beanFactory.containsBean(beanName);
   }
 
-  @Override
-  public void registerBean(String beanName, Object obj) {
-    this.beanFactory.registerBean(beanName, obj);
-  }
+  //  @Override
+  //  public void registerBean(String beanName, Object obj) {
+  //    this.beanFactory.registerBean(beanName, obj);
+  //  }
 
   @Override
   public boolean isSingleton(String name) {

@@ -36,20 +36,20 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry
     return bean;
   }
 
-  @Override
-  public void registerBeanDefinition(BeanDefinition beanDefinition) {
-    this.beanDefinitionMap.put(beanDefinition.getId(), beanDefinition);
-  }
+  //  @Override
+  //  public void registerBeanDefinition(BeanDefinition beanDefinition) {
+  //    this.beanDefinitionMap.put(beanDefinition.getId(), beanDefinition);
+  //  }
 
   @Override
   public boolean containsBean(String beanName) {
     return containsSingleton(beanName);
   }
 
-  @Override
-  public void registerBean(String beanName, Object obj) {
-    this.registerSingleton(beanName, obj);
-  }
+  //  @Override
+  //  public void registerBean(String beanName, Object obj) {
+  //    this.registerSingleton(beanName, obj);
+  //  }
 
   @Override
   public Class getType(String name) {
