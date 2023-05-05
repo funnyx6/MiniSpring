@@ -25,6 +25,12 @@ public class BeanDefinition {
     this.className = className;
   }
 
+  public BeanDefinition(String id, String className, boolean lazyInit) {
+    this.id = id;
+    this.className = className;
+    this.lazyInit = lazyInit;
+  }
+
   public String getId() {
     return id;
   }
@@ -82,6 +88,11 @@ public class BeanDefinition {
   }
 
   public Object getBeanClass() {
+    try {
+      return beanClass == null ? Class.forName(className) : beanClass;
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
     return beanClass;
   }
 

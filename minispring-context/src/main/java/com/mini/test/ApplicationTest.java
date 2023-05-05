@@ -14,7 +14,15 @@ public class ApplicationTest {
     ClassPathXmlApplicationContext applicationContext =
         new ClassPathXmlApplicationContext("application.xml");
 
-    HelloService helloService = (HelloService) applicationContext.getBean("helloService");
-    helloService.say();
+    //    HelloService helloService = (HelloService) applicationContext.getBean("helloService");
+    //    helloService.say();
+
+    HelloServiceImpl helloServiceInject =
+        (HelloServiceImpl) applicationContext.getBean("helloServiceInject");
+    //    helloServiceInject.say();
+    helloServiceInject.getHelloService1().say();
+
+    HelloService1 helloService1 = (HelloService1) applicationContext.getBean("helloService1");
+    helloService1.getHelloService().say();
   }
 }
