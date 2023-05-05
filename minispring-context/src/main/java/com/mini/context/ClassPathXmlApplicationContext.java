@@ -19,18 +19,25 @@ import com.mini.core.Resource;
  */
 public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationEventPublisher {
 
-  private BeanFactory beanFactory;
+  private SimpleBeanFactory beanFactory;
+
+  public ClassPathXmlApplicationContext(String fileName) {
+    this(fileName, true);
+  }
 
   /**
    * 构造器获取外部配置，解析出Bean的定义，形成内存映像
    *
    * @param fileName 文件名称
    */
-  public ClassPathXmlApplicationContext(String fileName) {
+  public ClassPathXmlApplicationContext(String fileName, boolean isRefresh) {
     Resource resource = new ClassPathXmlResource(fileName);
     this.beanFactory = new SimpleBeanFactory();
-    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader((SimpleBeanFactory) beanFactory);
+    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
     reader.loadBeanDefinitions(resource);
+    if (isRefresh) {
+      this.beanFactory.refresh();
+    }
   }
 
   @Override

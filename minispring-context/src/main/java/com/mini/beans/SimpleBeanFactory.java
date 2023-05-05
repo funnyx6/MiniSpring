@@ -34,7 +34,8 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry
 
         try {
           bean = createBean(beanDefinition);
-          handleProperties(beanDefinition, (Class<?>) beanDefinition.getBeanClass(), bean);
+          //          handleProperties(beanDefinition, (Class<?>) beanDefinition.getBeanClass(),
+          // bean);
         } catch (Exception e) {
 
         }
@@ -241,5 +242,15 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry
     }
     handleProperties(bd, clz, obj);
     return obj;
+  }
+
+  public void refresh() {
+    for (String beanDefinitionName : beanDefinitionNames) {
+      try {
+        getBean(beanDefinitionName);
+      } catch (BeansException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
