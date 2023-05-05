@@ -69,13 +69,13 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry
   public void registerBeanDefinition(String name, BeanDefinition bd) {
     this.beanDefinitionMap.put(name, bd);
     this.beanDefinitionNames.add(name);
-    if (!bd.isLazyInit()) {
-      try {
-        getBean(name);
-      } catch (BeansException e) {
-
-      }
-    }
+    //    if (!bd.isLazyInit()) {
+    //      try {
+    //        getBean(name);
+    //      } catch (BeansException e) {
+    //
+    //      }
+    //    }
   }
 
   @Override
@@ -244,10 +244,14 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry
     return obj;
   }
 
+  /** 刷新 */
   public void refresh() {
     for (String beanDefinitionName : beanDefinitionNames) {
       try {
-        getBean(beanDefinitionName);
+        BeanDefinition beanDefinition = getBeanDefinition(beanDefinitionName);
+        if (!beanDefinition.isLazyInit()) {
+          getBean(beanDefinitionName);
+        }
       } catch (BeansException e) {
         e.printStackTrace();
       }

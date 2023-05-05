@@ -3,7 +3,7 @@
 <beans>
     <!--    <bean id="helloService" class="com.mini.test.HelloServiceImpl"/>-->
 
-    <bean id="helloServiceInject" class="com.mini.test.HelloServiceImpl" lazyInit="true">
+    <bean id="helloServiceInject" class="com.mini.test.HelloServiceImpl">
         <property type="String" name="injectField" value="World"></property>
         <property type="com.mini.test.HelloService1" name="helloService1" ref="helloService1"/>
     </bean>
