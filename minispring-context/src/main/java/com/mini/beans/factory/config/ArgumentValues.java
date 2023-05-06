@@ -1,4 +1,4 @@
-package com.mini.context;
+package com.mini.beans.factory.config;
 
 import java.util.*;
 

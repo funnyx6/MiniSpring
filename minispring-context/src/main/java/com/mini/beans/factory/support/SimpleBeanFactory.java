@@ -1,6 +1,12 @@
-package com.mini.beans;
+package com.mini.beans.factory.support;
 
-import com.mini.context.*;
+import com.mini.beans.BeansException;
+import com.mini.beans.factory.BeanFactory;
+import com.mini.beans.factory.config.ArgumentValue;
+import com.mini.beans.factory.config.ArgumentValues;
+import com.mini.beans.factory.config.BeanDefinition;
+import com.mini.context.PropertyValue;
+import com.mini.context.PropertyValues;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

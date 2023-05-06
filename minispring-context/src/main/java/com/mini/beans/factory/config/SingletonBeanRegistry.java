@@ -1,4 +1,4 @@
-package com.mini.beans;
+package com.mini.beans.factory.config;
 
 /**
  * @author fanxiao 2023/4/20

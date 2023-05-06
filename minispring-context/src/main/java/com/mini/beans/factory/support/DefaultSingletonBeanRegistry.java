@@ -1,4 +1,6 @@
-package com.mini.beans;
+package com.mini.beans.factory.support;
+
+import com.mini.beans.factory.config.SingletonBeanRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

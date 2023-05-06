@@ -1,6 +1,11 @@
-package com.mini.beans;
+package com.mini.beans.factory.xml;
 
-import com.mini.context.*;
+import com.mini.beans.factory.config.ArgumentValue;
+import com.mini.beans.factory.config.ArgumentValues;
+import com.mini.beans.factory.config.BeanDefinition;
+import com.mini.beans.factory.support.SimpleBeanFactory;
+import com.mini.context.PropertyValue;
+import com.mini.context.PropertyValues;
 import com.mini.core.Resource;
 import org.dom4j.Element;
 

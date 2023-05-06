@@ -1,9 +1,9 @@
 package com.mini.context;
 
-import com.mini.beans.BeanFactory;
 import com.mini.beans.BeansException;
-import com.mini.beans.SimpleBeanFactory;
-import com.mini.beans.XmlBeanDefinitionReader;
+import com.mini.beans.factory.BeanFactory;
+import com.mini.beans.factory.support.SimpleBeanFactory;
+import com.mini.beans.factory.xml.XmlBeanDefinitionReader;
 import com.mini.core.ClassPathXmlResource;
 import com.mini.core.Resource;
 

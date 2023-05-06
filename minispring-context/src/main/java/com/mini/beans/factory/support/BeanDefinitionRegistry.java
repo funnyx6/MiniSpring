@@ -1,6 +1,6 @@
-package com.mini.beans;
+package com.mini.beans.factory.support;
 
-import com.mini.context.BeanDefinition;
+import com.mini.beans.factory.config.BeanDefinition;
 
 /**
  * 集中存放 {@link BeanDefinition}
