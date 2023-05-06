@@ -4,6 +4,8 @@ import com.mini.beans.BeansException;
 import com.mini.beans.factory.BeanFactory;
 import com.mini.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.mini.beans.factory.config.AutowireCapableBeanFactory;
+import com.mini.beans.factory.config.BeanDefinition;
+import com.mini.beans.factory.config.BeanPostProcessor;
 import com.mini.beans.factory.xml.XmlBeanDefinitionReader;
 import com.mini.core.ClassPathXmlResource;
 import com.mini.core.Resource;
@@ -82,10 +84,14 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
   }
 
   private void registerBeanPostProcessors(AutowireCapableBeanFactory beanFactory) {
-    AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor =
-        new AutowiredAnnotationBeanPostProcessor();
-    autowiredAnnotationBeanPostProcessor.setBeanFactory(beanFactory);
-    beanFactory.addBeanPostProcessor(autowiredAnnotationBeanPostProcessor);
+    beanFactory.registerBeanDefinition(
+        "autowiredAnnotationBeanPostProcessor",
+        new BeanDefinition(
+            "autowiredAnnotationBeanPostProcessor",
+            AutowiredAnnotationBeanPostProcessor.class.getName()));
+    BeanPostProcessor beanPostProcessor = beanFactory.getBean(BeanPostProcessor.class);
+
+    beanFactory.addBeanPostProcessor(beanPostProcessor);
   }
 
   private void onRefresh() {

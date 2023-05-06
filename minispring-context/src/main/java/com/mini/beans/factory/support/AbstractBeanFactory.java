@@ -2,6 +2,7 @@ package com.mini.beans.factory.support;
 
 import com.mini.beans.BeansException;
 import com.mini.beans.factory.BeanFactory;
+import com.mini.beans.factory.BeanFactoryAware;
 import com.mini.beans.factory.config.ArgumentValue;
 import com.mini.beans.factory.config.ArgumentValues;
 import com.mini.beans.factory.config.BeanDefinition;
@@ -62,16 +63,48 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
         }
         this.registerSingleton(beanName, bean);
 
-        // 进行beanpostprocessor处理
-        applyBeanPostProcessorBeforeInitialization(bean, beanName);
-        if (beanDefinition.getInitMethodName() != null
-            && !beanDefinition.getInitMethodName().equals("")) {
-          invokeInitMethod(beanDefinition, bean);
-        }
-        applyBeanPostProcessorAfterInitialization(bean, beanName);
+        initializeBean(beanDefinition, bean);
       }
     }
     return bean;
+  }
+
+  public <T> T getBean(Class<T> requiredType) {
+    Object bean = null;
+    for (String beanDefinitionName : beanDefinitionNames) {
+      BeanDefinition beanDefinition = getBeanDefinition(beanDefinitionName);
+      if (beanDefinition != null) {
+        if (requiredType.isAssignableFrom((Class<?>) beanDefinition.getBeanClass())) {
+          try {
+            bean = getBean(beanDefinition.getId());
+          } catch (BeansException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+    return (T) bean;
+  }
+
+  private void initializeBean(BeanDefinition beanDefinition, Object bean) throws BeansException {
+
+    invokeAwareMethods(beanDefinition.getId(), bean);
+
+    // 进行beanpostprocessor处理
+    applyBeanPostProcessorBeforeInitialization(bean, beanDefinition.getId());
+
+    if (beanDefinition.getInitMethodName() != null
+        && !beanDefinition.getInitMethodName().equals("")) {
+      invokeInitMethod(beanDefinition, bean);
+    }
+
+    applyBeanPostProcessorAfterInitialization(bean, beanDefinition.getId());
+  }
+
+  private void invokeAwareMethods(String beanName, Object bean) throws BeansException {
+    if (bean instanceof BeanFactoryAware) {
+      ((BeanFactoryAware) bean).setBeanFactory(AbstractBeanFactory.this);
+    }
   }
 
   @Override
@@ -162,7 +195,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
 
       // handle constructor
       ArgumentValues argumentValues = bd.getConstructorArgumentValues();
-      if (!argumentValues.isEmpty()) {
+      if (argumentValues != null && !argumentValues.isEmpty()) {
         Class<?>[] paramTypes = new Class<?>[argumentValues.getArgumentCount()];
         Object[] paramValues = new Object[argumentValues.getArgumentCount()];
         for (int i = 0; i < argumentValues.getArgumentCount(); i++) {
@@ -219,7 +252,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
     System.out.println("handle properties for bean : " + bd.getId());
     PropertyValues propertyValues = bd.getPropertyValues();
     // 如果有属性
-    if (!propertyValues.isEmpty()) {
+    if (propertyValues != null && !propertyValues.isEmpty()) {
       for (int i = 0; i < propertyValues.size(); i++) {
         PropertyValue propertyValue = propertyValues.getPropertyValueList().get(i);
         String pName = propertyValue.getName();
