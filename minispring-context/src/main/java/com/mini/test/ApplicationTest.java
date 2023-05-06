@@ -20,6 +20,6 @@ public class ApplicationTest {
     //    helloServiceInject.getHelloService1().say();
 
     HelloService1 helloService1 = (HelloService1) applicationContext.getBean("helloService1");
-    helloService1.getHelloService().say();
+    //    helloService1.getHelloService().say();
   }
 }

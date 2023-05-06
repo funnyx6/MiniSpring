@@ -8,4 +8,11 @@
         <property type="com.mini.test.HelloService1" name="helloService1" ref="helloService1"/>
     </bean>
 
+    <bean id="helloService1" class="com.mini.test.HelloService1">
+        <!--        <property type="com.mini.test.HelloService" name="helloService" ref="helloServiceInject"/>-->
+    </bean>
+
+    <bean id="helloServiceAutowired" class="com.mini.test.HelloServiceAutowired"/>
+
+
 </beans>

@@ -2,7 +2,8 @@ package com.mini.context;
 
 import com.mini.beans.BeansException;
 import com.mini.beans.factory.BeanFactory;
-import com.mini.beans.factory.support.SimpleBeanFactory;
+import com.mini.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import com.mini.beans.factory.config.AutowireCapableBeanFactory;
 import com.mini.beans.factory.xml.XmlBeanDefinitionReader;
 import com.mini.core.ClassPathXmlResource;
 import com.mini.core.Resource;
@@ -19,24 +20,19 @@ import com.mini.core.Resource;
  */
 public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationEventPublisher {
 
-  private SimpleBeanFactory beanFactory;
+  private AutowireCapableBeanFactory beanFactory;
 
   public ClassPathXmlApplicationContext(String fileName) {
     this(fileName, true);
   }
 
-  /**
-   * 构造器获取外部配置，解析出Bean的定义，形成内存映像
-   *
-   * @param fileName 文件名称
-   */
   public ClassPathXmlApplicationContext(String fileName, boolean isRefresh) {
     Resource resource = new ClassPathXmlResource(fileName);
-    this.beanFactory = new SimpleBeanFactory();
+    this.beanFactory = new AutowireCapableBeanFactory();
     XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
     reader.loadBeanDefinitions(resource);
     if (isRefresh) {
-      this.beanFactory.refresh();
+      refresh();
     }
   }
 
@@ -77,4 +73,22 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
 
   @Override
   public void publishEvent(ApplicationEvent event) {}
+
+  public void refresh() {
+
+    registerBeanPostProcessors(beanFactory);
+
+    onRefresh();
+  }
+
+  private void registerBeanPostProcessors(AutowireCapableBeanFactory beanFactory) {
+    AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor =
+        new AutowiredAnnotationBeanPostProcessor();
+    autowiredAnnotationBeanPostProcessor.setBeanFactory(beanFactory);
+    beanFactory.addBeanPostProcessor(autowiredAnnotationBeanPostProcessor);
+  }
+
+  private void onRefresh() {
+    this.beanFactory.refresh();
+  }
 }

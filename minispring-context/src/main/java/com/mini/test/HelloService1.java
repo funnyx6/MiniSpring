@@ -6,17 +6,17 @@ package com.mini.test;
  */
 public class HelloService1 {
 
-  private HelloService helloService;
+  //  private HelloService helloService;
 
   public void say() {
     System.out.println("HelloService1...");
   }
 
-  public HelloService getHelloService() {
-    return helloService;
-  }
+  //  public HelloService getHelloService() {
+  //    return helloService;
+  //  }
 
-  public void setHelloService(HelloService helloService) {
-    this.helloService = helloService;
-  }
+  //  public void setHelloService(HelloService helloService) {
+  //    this.helloService = helloService;
+  //  }
 }
